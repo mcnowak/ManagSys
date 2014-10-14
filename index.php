@@ -17,4 +17,5 @@
  */
 
 include "controllers/Controller.php";
-new Controller();
+$obj = new Controller();
+$obj->url("Statistics", "index");

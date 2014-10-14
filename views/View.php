@@ -21,7 +21,7 @@ class View {
     
     function show() {
         extract($this->arr);
-        include_once "views/".$_GET["controller"].".php";
+        include_once "views/".$_POST["controller"].".php";
     }
     function assign($name, $value) {
         $this->arr[$name] = $value;
