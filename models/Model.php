@@ -37,7 +37,7 @@ class Model extends Db {
          
         $db = $this->_db->prepare($this->_sql);
         $db->execute($data);        
-        return $db->fetchAll(PDO::FETCH_GROUP);
+        return $db->fetchAll();
     }
      
     public function getRow($data = null, $fetch_style = null) {

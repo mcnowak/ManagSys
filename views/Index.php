@@ -27,37 +27,15 @@
 
 <article>
     <header>
-        <h1>Statistics</h1>
-        <a href="index.php?controller=Statistics&func=index">test</a>
+        <h1>Welcome</h1>
+        <a href="index.php?controller=Statistics&func=index">Statistics</a>
     </header>
-    <form action="#">
-        <fieldset>
-            <label for="test">Select a test</label>
-                <select name="tests" id="test">
-                    <option selected="selected"></option>
-                    <option>1</option>
-                </select>
-        </fieldset>
-    </form>
     
     <footer>
         <p>Copyright by: Maciej Nowakowski</p>
         <p><time pubdate datetime="2019-10-09"></time></p>
     </footer> 
 </article>
-<script>
-    $(document).ready(function(){
-        $("#btn1").click(function(){
-            $("#test1").text("Hello world!");
-        });
-        $("#btn2").click(function(){
-            $("#test2").html("<b>Hello world!</b>");
-        });
-        $("#btn3").click(function(){
-            $("#test3").val("Dolly Duck");
-        });
-    });
-</script>
 </body>
 </html>
 

@@ -16,5 +16,7 @@
  * limitations under the License.
  */
 
-include "controllers/Controller.php";
-new Controller();
+class Index extends View {
+    public function index() {
+    }
+}

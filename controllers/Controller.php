@@ -20,15 +20,16 @@ include_once 'models/Model.php';
 
 class Controller {
     public function __construct() {
-        //$name = $_GET["controller"];
-        //include $name.".php";
-        //$obj = new $name;
-        //$obj->$_GET["func"]();
-    }
-    public function url($name, $func) {
-        include $name.".php";
-        $_POST["controller"] = $name;
-        $obj = new $name;
-        $obj->$func();
+        if(!empty($_GET["controller"])) {
+            $name = $_GET["controller"];
+            include $name.".php";
+            $obj = new $name;
+            $obj->$_GET["func"]();
+        } else {
+            $_GET["controller"] = "Index";
+            include "Index.php";
+            $obj = new Index;
+            $obj->index();
+        }
     }
 }
