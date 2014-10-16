@@ -5,10 +5,14 @@
         <group>
             <file>file:/var/www/html/ManagSys/views/Statistics.php</file>
             <file>file:/var/www/html/ManagSys/models/Model.php</file>
+            <file>file:/var/www/html/ManagSys/models/msStatistics.php</file>
             <file>file:/var/www/html/ManagSys/controllers/Statistics.php</file>
             <file>file:/var/www/html/ManagSys/controllers/Controller.php</file>
             <file>file:/var/www/html/ManagSys/config/db.php</file>
+            <file>file:/var/www/html/ManagSys/views/Index.php</file>
+            <file>file:/var/www/html/ManagSys/controllers/Index.php</file>
             <file>file:/var/www/html/ManagSys/index.php</file>
+            <file>file:/var/www/html/ManagSys/views/View.php</file>
         </group>
     </open-files>
 </project-private>
