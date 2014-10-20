@@ -18,54 +18,52 @@
 
 class Statistics extends View {
     public function index() {
-        require_once './models/msStatistics.php';
-        $db = new msStatistics();
+        $iTeacherId = 1; //default value teacher id
         
-        $aStudentsMarks = $db->getStudentsMarks();
-        $aAveragedStudentsMarks = $this->averageScore($aStudentsMarks);
-        $aGeneratedStudentsMarks = $this->belowAverageScore($aAveragedStudentsMarks);
-        $this->assign("StudentsMarks", $aGeneratedStudentsMarks);/*
-        if ($aGeneratedStudentsMarks != false) {
-            session_start();
-            $_SESSION["StudentsMarks"] = $aGeneratedStudentsMarks;
-
-            header('Location: views/Statistics.php');
+        require_once './models/msStatistics.php';
+        $dbStatistics = new msStatistics();
+        $aStudentsMarks = $dbStatistics->getStudentsMarks();
+        $aStudents = $dbStatistics->getStudents($iTeacherId);
+        $aGradeData = $dbStatistics->getGradeData($iTeacherId);
+        
+        if (!empty($aStudentsMarks)) {
+            foreach ($aStudentsMarks as $key => $value) {
+                $arr_length = count($value);
+                $iSumMarks = $this->testAverageScores($value);
+                $aStudentsMarks[$key]['TestAverageScore'] = intval($iSumMarks / $arr_length);
+            }
+            
+            foreach ($aStudentsMarks as $key => $value) {
+                $aStudentsMarks[$key]['StudentsBelowAverageScore'] = $this->studentsBelowAverageScore($value, $aStudentsMarks[$key]['TestAverageScore']);
+            }
         }
-        exit();*/
+
+        $this->assign("StudentsMarks", $aStudentsMarks);
+        $this->assign("GradeData", $aGradeData);
+        $this->assign("Students", $aStudents);
     }
     
-    private function belowAverageScore($aAveragedStudentsMarks = array()) {
-        if (!empty($aAveragedStudentsMarks)) {
-            foreach ($aAveragedStudentsMarks as $sSubject => $aData) {
-                $iSumBelowStudents = 0;
-                $sDate = $aData[0]['date'];
-                $arr_length = count($aData);
-                for ($i = 0; $i < $arr_length; $i++) {
-                    if ($aData[$sDate] > $aData[$i]['marks'] && !empty($aData[$i]['marks'])) {
-                        $iSumBelowStudents++;
-                    }
-                }
-                $aAveragedStudentsMarks[$sSubject]['below'] = $iSumBelowStudents;
+    private function testAverageScores($aStudentsMarks = array()) {        
+        if (!empty($aStudentsMarks)) {
+            $iSumMarks = 0;
+            foreach ($aStudentsMarks as $value) {
+                    $iSumMarks += (int) $value['marks'];
             }
-            return $aAveragedStudentsMarks;
+            return $iSumMarks;
         } else {
             return false;
         }
     }
     
-    private function averageScore($aStudentsMarks = array()) {        
-        if (!empty($aStudentsMarks)) {
-            foreach ($aStudentsMarks as $sSubject => $aData) {
-                $iSumMarks = 0;
-                $arr_length = count($aData);
-                for ($i = 0; $i < $arr_length; $i++) {
-                    $iSumMarks += (int) $aData[$i]['marks'];
+    private function studentsBelowAverageScore($aStudentsMarks = array(), $testAverageScore = NULL) {
+        if (!empty($aStudentsMarks) && !empty($testAverageScore)) {
+            $iSumBelowStudents = 0;
+            foreach ($aStudentsMarks as $value) {
+                if ($testAverageScore > $value['marks'] && !empty($value['marks'])) {
+                    $iSumBelowStudents++;
                 }
-                $iAverageScore = intval($iSumMarks / $i);
-                $sDate = $aData[0]['date'];
-                $aStudentsMarks[$sSubject][$sDate] = $iAverageScore;
             }
-            return $aStudentsMarks;
+            return $iSumBelowStudents;
         } else {
             return false;
         }

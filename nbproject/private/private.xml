@@ -3,16 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/var/www/html/ManagSys/views/Statistics.php</file>
-            <file>file:/var/www/html/ManagSys/models/Model.php</file>
-            <file>file:/var/www/html/ManagSys/models/msStatistics.php</file>
-            <file>file:/var/www/html/ManagSys/controllers/Statistics.php</file>
-            <file>file:/var/www/html/ManagSys/controllers/Controller.php</file>
-            <file>file:/var/www/html/ManagSys/config/db.php</file>
-            <file>file:/var/www/html/ManagSys/views/Index.php</file>
-            <file>file:/var/www/html/ManagSys/controllers/Index.php</file>
-            <file>file:/var/www/html/ManagSys/index.php</file>
-            <file>file:/var/www/html/ManagSys/views/View.php</file>
+            <file>file:/C:/xampp/htdocs/ManagSys/models/Model.php</file>
+            <file>file:/C:/xampp/htdocs/ManagSys/models/msStatistics.php</file>
+            <file>file:/C:/xampp/htdocs/ManagSys/controllers/Controller.php</file>
+            <file>file:/C:/xampp/htdocs/ManagSys/index.php</file>
+            <file>file:/C:/xampp/htdocs/ManagSys/views/Statistics.php</file>
+            <file>file:/C:/xampp/htdocs/ManagSys/controllers/Statistics.php</file>
+            <file>file:/C:/xampp/htdocs/ManagSys/views/Test.php</file>
+            <file>file:/C:/xampp/htdocs/ManagSys/models/msTest.php</file>
+            <file>file:/C:/xampp/htdocs/ManagSys/controllers/Test.php</file>
+            <file>file:/C:/xampp/htdocs/ManagSys/views/Index.php</file>
+            <file>file:/C:/xampp/htdocs/ManagSys/controllers/Index.php</file>
+            <file>file:/C:/xampp/htdocs/ManagSys/views/View.php</file>
         </group>
     </open-files>
 </project-private>

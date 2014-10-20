@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-require('./config/db.php');
+require('./config/db.php'); 
 
 class Model extends Db {
     protected $_db;
@@ -37,7 +37,7 @@ class Model extends Db {
          
         $db = $this->_db->prepare($this->_sql);
         $db->execute($data);        
-        return $db->fetchAll();
+        return $db->fetchAll($fetch_style);
     }
      
     public function getRow($data = null, $fetch_style = null) {
@@ -47,7 +47,16 @@ class Model extends Db {
          
         $db = $this->_db->prepare($this->_sql);
         $db->execute($data);
-        return $db->fetch();
+        return $db->fetch($fetch_style);
+    }
+    
+    public function insertRow($data = null) {
+        if (!$this->_sql) {
+            throw new Exception("No SQL query!");
+        }
+         
+        $db = $this->_db->prepare($this->_sql);
+        return $db->execute($data);
     }
 }
 

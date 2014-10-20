@@ -17,6 +17,6 @@
  */
 
 class Index extends View {
-    public function index() {
-    }
+    public function index() {}
 }
+

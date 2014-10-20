@@ -27,7 +27,7 @@ class View {
         $this->arr[$name] = $value;
     }
     public function __destruct() {
-        $this->show();
+        $this->show(); 
     }
 }
 

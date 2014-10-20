@@ -1,7 +1,7 @@
 <?php
 
 /* 
- * Copyright 2014 mcn.
+ * Copyright 2014 Maciej.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,5 +16,5 @@
  * limitations under the License.
  */
 
-include "controllers/Controller.php";
+include_once 'controllers/Controller.php';
 new Controller();

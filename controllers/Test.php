@@ -16,32 +16,22 @@
  * limitations under the License.
  */
 
-?>
-
-<!DOCTYPE html>
-<html>
-<head>
-</head>
-<body>
-
-<article>
-    <header>
-        <h1>Welcome</h1>
+class Test extends View {
+    public function index() {
+        $iTeacherId = 1; //default value teacher id
+        $bAdded = false;
         
-        <nav>
-            <h1>Navigation</h1>
-            <ul>
-                <li><a href="index.php?controller=Test&func=index">Add Test Scores</a></li>
-                <li><a href="index.php?controller=Statistics&func=index">Statistics</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <footer>
-        <p>Copyright by: Machey Nowakowski</p>
-        <p><time pubdate datetime="2019-10-19"></time></p>
-    </footer> 
-</article>
-</body>
-</html>
+        require_once './models/msTest.php';
+        $dbTest = new msTest();
+        $aTests = $dbTest->getTests();
+        $aStudents = $dbTest->getStudents($iTeacherId);
+        
+        if(!empty($_POST)){
+            $bAdded = $dbTest->addStudentMark($_POST['tests'], $_POST['students'], $_POST['marks']);
+        }
 
+        $this->assign("Added", $bAdded);
+        $this->assign("Tests", $aTests);
+        $this->assign("Students", $aStudents);
+    }
+}

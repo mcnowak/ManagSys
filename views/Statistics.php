@@ -21,41 +21,100 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="./jquery/jquery/jquery.js"></script>
 </head>
 <body>
 
 <article>
     <header>
         <h1>Statistics</h1>
-        <a href="index.php?controller=Statistics&func=index">test</a>
+        
+        <nav>
+            <h1>Navigation</h1>
+            <ul>
+                <li><a href="index.php">Back to home page</a></li>
+                <li><a href="index.php?controller=Test&func=index">Add Test Scores</a></li>
+            </ul>
+        </nav>
     </header>
-    <form action="#">
-        <fieldset>
-            <label for="test">Select a test</label>
-                <select name="tests" id="test">
-                    <option selected="selected"></option>
-                    <option>1</option>
-                </select>
-        </fieldset>
-    </form>
+    <fieldset>
+        <label>Select a test: </label>
+        <select name="tests" id="tests">
+            <option value="" selected="selected"></option>
+            <?php foreach ($GradeData as $key => $value) {
+                ?><option value="<?php echo $value['exam_id'];?>"><?php echo $value['year']." - ".$value['grade'].$value['section']." - ".$value['course']." \"".$value['exam']."\"";?></option><?php
+            } ?>
+        </select>
+    </fieldset>
+    
+    <table id="StudentsMarks" border="1" style="width:300px"></table>
+    </br>
+    <table id="AverageScores" border="1" style="width:300px"></table>
+    </br>
+    
+    <fieldset>
+        <label>Select students across all tests of year: </label>
+        <select name="students" id="students">
+            <option value="" selected="selected"></option>
+            <?php foreach ($Students as $key => $value) {
+                ?><option value="<?php echo $key;?>"><?php echo "\"".$value['StudentName']."\" - ".$value['year']." - ".$value['grade'].$value['section'];?></option><?php
+            } ?>
+        </select>
+    </fieldset>
+    
+    <table id="Students" border="1" style="width:300px"></table>
     
     <footer>
-        <p>Copyright by: Maciej Nowakowski</p>
-        <p><time pubdate datetime="2019-10-09"></time></p>
+        <p>Copyright by: Machey Nowakowski</p>
+        <p><time pubdate datetime="2019-10-19"></time></p>
     </footer> 
 </article>
 <script>
-    $(document).ready(function(){
-        $("#btn1").click(function(){
-            $("#test1").text("Hello world!");
+    $('#tests').change(function(){
+        $('#StudentsMarks').empty();
+        $('#AverageScores').empty();
+        var aSelectedResult = $("#tests option:selected").get();
+        var aValue = $.map(aSelectedResult, function(element){
+                return $(element).attr("value");
+            });
+        var aData = <?php echo json_encode($StudentsMarks); ?>;
+        if(aValue.toString()) makeTables(aData[aValue]);
+    });
+    function makeTables(data) {
+        var rowSM = $("<tr/>");
+        rowSM.append($("<th/>").text("Name"));
+        rowSM.append($("<th/>").text("Mark"));
+        $('#StudentsMarks').append(rowSM);
+        $.each(data, function(key, value) {
+            var rowSM = $("<tr/>");
+            $.each(value, function(keyIndex, c) {
+                rowSM.append($("<td/>").text(c));
+            });
+            $('#StudentsMarks').append(rowSM);
         });
-        $("#btn2").click(function(){
-            $("#test2").html("<b>Hello world!</b>");
-        });
-        $("#btn3").click(function(){
-            $("#test3").val("Dolly Duck");
-        });
+        
+        var rowAS = $("<tr/>");
+        rowAS.append($("<th/>").text("Test Average Score"));
+        rowAS.append($("<th/>").text("Students Below Average Score"));
+        $('#AverageScores').append(rowAS);
+        var rowAS = $("<tr/>");
+        rowAS.append($("<td/>").text(data['TestAverageScore'].toString()));
+        rowAS.append($("<td/>").text(data['StudentsBelowAverageScore'].toString()));
+        $('#AverageScores').append(rowAS);
+    }
+    $('#students').change(function(){
+        $('#Students').empty();
+        var aSelectedResult = $("#students option:selected").get();
+        var aValue = $.map(aSelectedResult, function(element){
+                return $(element).attr("value");
+            });
+        var aData = <?php echo json_encode($Students); ?>;
+        if(aValue.toString()) {
+            var row = $("<tr/>");
+            var avg = parseFloat(aData[aValue]['avg']);
+            row.append($("<td/>").text(avg.toFixed(2).toString()));
+            $('#Students').append(row);
+        }
     });
 </script>
 </body>

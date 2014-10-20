@@ -22,12 +22,12 @@ class Controller {
     public function __construct() {
         if(!empty($_GET["controller"])) {
             $name = $_GET["controller"];
-            include $name.".php";
+            include_once "controllers/".$name.".php";
             $obj = new $name;
             $obj->$_GET["func"]();
         } else {
             $_GET["controller"] = "Index";
-            include "Index.php";
+            include_once "controllers/Index.php";
             $obj = new Index;
             $obj->index();
         }
