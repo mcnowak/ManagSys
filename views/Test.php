@@ -37,7 +37,9 @@
             </ul>
         </nav>
     </header>
-    <?php if($Added == 1): ?><h1>Added New Row to Database</h1><?php endif; ?>
+    <?php if($Added == 1): ?><h1>Added New Row to Database</h1>
+    <?php elseif($Added == 2): ?><h1>Selected options are in database</h1>
+    <?php endif; ?>
     <form action="index.php?controller=Test&func=index" method="post">
         <fieldset>
             <label>Select a test: </label>
@@ -47,15 +49,19 @@
                     ?><option value="<?php echo $value['exam_id'];?>"><?php echo $value['name'];?></option><?php
                 } ?>
             </select>
-            <label>Select student: </label>
-            <select name="students" id="students"></select>
-            <label>Select mark: </label>
-            <select name="marks" id="marks">
-                <?php for ($i = 0; $i < 101; $i++) {
-                    ?><option value="<?php echo $i;?>"><?php echo $i;?></option><?php
-                } ?>
-            </select>
-            <input type="submit" value="Submit">
+            <div id="div-students">
+                <label>Select student: </label>
+                <select name="students" id="students"></select>
+            </div>
+            <div id="div-marks">
+                <label>Select mark: </label>
+                <select name="marks" id="marks">
+                    <?php for ($i = 0; $i < 101; $i++) {
+                        ?><option value="<?php echo $i;?>"><?php echo $i;?></option><?php
+                    } ?>
+                </select>
+            </div>
+            <input id="submit" type="submit" value="Submit">
         </fieldset>
     </form>
     
@@ -65,18 +71,39 @@
     </footer> 
 </article>
 <script>
+    $( document ).ready(function() {
+        jQuery('#div-students').hide();
+        jQuery('#div-marks').hide();
+        jQuery('#submit').hide();
+    });
     $('#tests').change(function(){
         $('#students').empty();
+        jQuery('#div-students').hide();
+        jQuery('#div-marks').hide();
+        jQuery('#submit').hide();
         var aSelectedResult = $("#tests option:selected").get();
         var aValue = $.map(aSelectedResult, function(element){
                 return $(element).attr("value");
             });
         var aData = <?php echo json_encode($Students); ?>;
         if(aValue.toString()) {
-            var rowS = $("");
+            jQuery('#div-students').show();
+            $('#students').append("<option></option>");
             $.each(aData[aValue], function(key, value) {
                 $('#students').append("<option value="+value["student_id"].toString()+">"+value["name"].toString()+"</option>");
             });
+        }
+    });
+    $('#students').change(function(){
+        jQuery('#div-marks').hide();
+        jQuery('#submit').hide();
+        var aSelectedResult = $("#students option:selected").get();
+        var aValue = $.map(aSelectedResult, function(element){
+                return $(element).attr("value");
+            });
+        if(aValue.toString()) {
+            jQuery('#div-marks').show();
+            jQuery('#submit').show();
         }
     });
 </script>

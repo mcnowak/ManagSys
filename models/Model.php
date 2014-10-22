@@ -56,7 +56,7 @@ class Model extends Db {
         }
          
         $db = $this->_db->prepare($this->_sql);
-        return $db->execute($data);
+        $db->execute($data);
     }
 }
 

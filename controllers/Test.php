@@ -19,16 +19,22 @@
 class Test extends View {
     public function index() {
         $iTeacherId = 1; //default value teacher id
-        $bAdded = false;
+        $bAdded = 0;
         
         require_once './models/msTest.php';
         $dbTest = new msTest();
         $aTests = $dbTest->getTests();
         $aStudents = $dbTest->getStudents($iTeacherId);
-        
-        if(!empty($_POST)){
-            $bAdded = $dbTest->addStudentMark($_POST['tests'], $_POST['students'], $_POST['marks']);
-        }
+
+        if(!empty($_POST['students'])) {
+            $bResult = $dbTest->getExamResult($_POST['tests'], $_POST['students']);
+            
+            if(empty($bResult)) {
+                $bAdded = $dbTest->addStudentMark($_POST['tests'], $_POST['students'], $_POST['marks']);
+            } else {
+                $bAdded = 2;
+            }
+        } 
 
         $this->assign("Added", $bAdded);
         $this->assign("Tests", $aTests);

@@ -44,6 +44,16 @@ class msTest extends Model {
         return $aStudents;
     }
     
+    public function getExamResult($iExamId, $iStudentId) {
+        $sql = "SELECT exam_id, student_id, marks "
+                . "FROM exam_result "
+                . "WHERE exam_id = $iExamId AND student_id = $iStudentId";
+        $this->_setSql($sql);
+        $aExamResult = $this->getRow(null);
+         
+        return $aExamResult;
+    }
+    
     public function addStudentMark($iExamId, $iStudentId, $iMark) {
         $sql = "INSERT INTO exam_result (exam_id,student_id,marks) VALUES (:exam_id,:student_id,:marks)";
         $this->_setSql($sql);
@@ -52,11 +62,10 @@ class msTest extends Model {
         $data[':exam_id'] = $iExamId;
         $data[':student_id'] = $iStudentId;
         $data[':marks'] = $iMark;
-        print_r($data);
-        $bAdded = $this->insertRow($data);
-         
-        if(empty($bAdded)) return false;
-         
+        
+        $this->insertRow($data);
+        $bAdded = 1;
+        
         return $bAdded;
     }
 }
